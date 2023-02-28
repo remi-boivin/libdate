@@ -20,23 +20,11 @@ jobs:
 
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
-          cmake -B ${{github.workspace}}/build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_BUILD_TOOL=gcc && cd ${{github.workspace}}/build/ && make && cd - && zip -r --junk-paths cpp-project-template README.md ${{github.workspace}}/build/src/cpp-project-template
-
-      # - name: Bump version and push tag
-      #   id: tag_version
-      #   uses: mathieudutour/github-tag-action@v6.1
-      #   with:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-
-      # - name: Extract version numbers
-      #   run: |
-      #     TAG_NAME=${{ steps.tag_version.outputs.new_tag }}
-      #     MAJOR_VERSION=$(echo $TAG_NAME | grep -o '[0-9]*\.[0-9]*' | grep -o '[0-9]*' | sed '1b;;d')
-      #     MINOR_VERSION=$(echo $TAG_NAME | grep -o '[0-9]*\.[0-9]*' | grep -o '[0-9]*' | sed '2b;;d')
-      #     PATCH_VERSION=$(echo $TAG_NAME | grep -o '[0-9]*\.[0-9]*' | grep -o '[0-9]*' | sed '3b;;d')
-      #     echo "MAJOR_VERSION=$MAJOR_VERSION" >> $GITHUB_ENV
-      #     echo "MINOR_VERSION=$MINOR_VERSION" >> $GITHUB_ENV
-      #     echo "PATCH_VERSION=$PATCH_VERSION" >> $GITHUB_ENV
+          cmake -B ${{github.workspace}}/build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release -DCMAKE_BUILD_TOOL=gcc
+          cd ${{github.workspace}}/build/
+          make
+          cd -
+          zip -r --junk-paths cpp-project-template README.md ${{github.workspace}}/build/src/cpp-project-template
 
       - name: Create release
         id: create_release
